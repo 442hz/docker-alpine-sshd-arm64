@@ -9,9 +9,13 @@ if [ "${KEYPAIR_LOGIN}" = "true" ] && [ -f "${HOME}/.ssh/authorized_keys" ] ; th
     sed -i "s/#PasswordAuthentication.*/PasswordAuthentication no/" /etc/ssh/sshd_config
     echo "Enabled root-login by keypair and disabled password-login"
 else
-    sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config
+    sed -i "s/#PermitRootLogin.*/PermitRootLogin\ yes/" /etc/ssh/sshd_config
+    sed -i "s/#PasswordAuthentication.*/PasswordAuthentication yes/" /etc/ssh/sshd_config
     if [ -n "${ROOT_PASSWORD}" ] && [ "${ROOT_PASSWORD}" != "root" ]; then
         echo "root:${ROOT_PASSWORD}" | chpasswd
+    fi
+    if [ -n "${ROOT_PASSWORD}" ]; then
+        grep -q 'root:!:' /etc/shadow && echo "root:${ROOT_PASSWORD}" | chpasswd
     fi
     echo "Enabled root-login by password"
 fi
