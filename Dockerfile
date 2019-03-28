@@ -3,13 +3,11 @@ FROM        arm64v8/alpine:${ALPINE_VERSION}
 
 LABEL       maintainer="荒野无灯, hermsi1337"
 
-ARG         OPENSSH_VERSION=${OPENSSH_VERSION:-7.7_p1-r3}
-ENV         OPENSSH_VERSION=${OPENSSH_VERSION} \
-            ROOT_PASSWORD=root \
+ENV         ROOT_PASSWORD=root \
             KEYPAIR_LOGIN=false
 
 ADD         entrypoint.sh /
-RUN         apk add --upgrade --no-cache openssh=${OPENSSH_VERSION} \
+RUN         apk add --upgrade --no-cache openssh \
             && chmod +x /entrypoint.sh \
 	    && mkdir -p /root/.ssh \
 	    && rm -rf /var/cache/apk/* /tmp/*
