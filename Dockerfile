@@ -1,7 +1,7 @@
-ARG         ALPINE_VERSION=${ALPINE_VERSION:-3.8}
-FROM        alpine:${ALPINE_VERSION}
+ARG         ALPINE_VERSION=${ALPINE_VERSION:-latest}
+FROM        arm64v8/alpine:${ALPINE_VERSION}
 
-LABEL       maintainer="https://github.com/hermsi1337"
+LABEL       maintainer="荒野无灯, hermsi1337"
 
 ARG         OPENSSH_VERSION=${OPENSSH_VERSION:-7.7_p1-r3}
 ENV         OPENSSH_VERSION=${OPENSSH_VERSION} \
